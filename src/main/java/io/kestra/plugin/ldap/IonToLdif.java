@@ -15,6 +15,7 @@ import com.unboundid.ldif.LDIFRecord;
 import com.unboundid.ldif.LDIFWriter;
 
 import io.kestra.core.exceptions.IllegalVariableEvaluationException;
+import io.kestra.core.models.annotations.Metric;
 import io.kestra.core.models.annotations.Plugin;
 import io.kestra.core.models.annotations.PluginProperty;
 import io.kestra.core.models.executions.metrics.Counter;
@@ -138,6 +139,20 @@ import org.slf4j.Logger;
             deleteoldrdn: 1
             """},
             full = true
+        )
+    },
+     metrics = {
+        @Metric(
+            name = "entries.found",
+            type = Counter.TYPE,
+            unit = "entries",
+            description = "Number of entries found during Ion to LDIF conversion"
+        ),
+        @Metric(
+            name = "entries.translated",
+            type = Counter.TYPE,
+            unit = "entries",
+            description = "Number of entries successfully translated to LDIF format"
         )
     }
 )

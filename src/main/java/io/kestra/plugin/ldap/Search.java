@@ -7,36 +7,28 @@ import com.unboundid.ldap.sdk.SearchRequest;
 import com.unboundid.ldap.sdk.SearchResult;
 import com.unboundid.ldap.sdk.SearchResultEntry;
 import com.unboundid.ldap.sdk.SearchScope;
-
 import io.kestra.core.models.annotations.Plugin;
 import io.kestra.core.models.annotations.PluginProperty;
+import io.kestra.core.models.annotations.Metric;
 import io.kestra.core.models.executions.metrics.Counter;
 import io.kestra.core.models.executions.metrics.Timer;
 import io.kestra.core.models.property.Property;
 import io.kestra.core.models.tasks.RunnableTask;
 import io.kestra.core.runners.RunContext;
-
 import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.File;
-
 import java.net.URI;
-
 import java.time.Duration;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
-import lombok.Builder.Default;
 import lombok.Builder;
+import lombok.Builder.Default;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-
 import org.slf4j.Logger;
 
 @SuperBuilder
@@ -74,6 +66,18 @@ import org.slf4j.Logger;
                     hostname: 0.0.0.0
                     port: 15060
                 """
+        )
+    },
+    metrics = {
+        @Metric(
+            name = "entries.found",
+            type = Counter.TYPE,
+            description = "The total number of LDAP entries found by the search."
+        ),
+        @Metric(
+            name = "search.mean_time",
+            type = Timer.TYPE,
+            description = "The average time taken to complete the LDAP search."
         )
     }
 )
